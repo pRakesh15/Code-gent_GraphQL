@@ -1,0 +1,121 @@
+mutation RegisterWithCredentials(
+$registerWithCredentialsInput: RegisterWithCredentialsInput!
+) {
+  registerWithCredentials(
+  registerWithCredentialsInput: $registerWithCredentialsInput
+  ) {
+    image
+    name
+    uid
+    createdAt
+    updatedAt
+
+  }
+}
+
+query Users {
+  users {
+    image
+    name
+    uid
+    createdAt
+    updatedAt
+    
+  }
+}
+
+mutation Login($loginInput: LoginInput!) {
+  login(loginInput: $loginInput) {
+    token
+    user {
+      uid
+      name
+      image
+    }
+  }
+}
+
+query GetAuthProvider($uid: String!) {
+  getAuthProvider(uid: $uid) {
+    uid
+    type
+  }
+}
+
+query SearchGarages($dateFilter: DateFilterInput!, $locationFilter: LocationFilterInput!, $slotsFilter: SlotWhereInput, $garageFilter: GarageFilter) {
+  searchGarages(dateFilter: $dateFilter, locationFilter: $locationFilter, slotsFilter: $slotsFilter, garageFilter: $garageFilter) {
+    id
+    image
+    displayName
+    verification {
+      verified
+    }
+    address {
+      lat
+      lng
+      address
+    }
+    availableSlots(dateFilter: $dateFilter, slotsFilter: $slotsFilter) {
+      type
+      pricePerHour
+      count
+    }
+  }
+}
+
+query MyCompany {
+  myCompany {
+    id
+    garages {
+      id
+      displayName
+      description
+      address {
+        id
+        address
+        lat
+        lng
+      }
+    }
+    description
+    createdAt
+    displayName
+  }
+}
+
+mutation CreateCompany($createCompanyInput: CreateCompanyInput!) {
+  createCompany(createCompanyInput: $createCompanyInput) {
+    id
+  }
+}
+
+query Garages($distinct: [GarageScalarFieldEnum!], $where: GarageWhereInput, $cursor: GarageWhereUniqueInput, $take: Float, $skip: Float, $orderBy: [GarageOrderByWithRelationInput!]) {
+  garages(distinct: $distinct, where: $where, cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {
+    id
+    displayName
+    description
+    image
+    verification {
+      verified
+    }
+    address {
+      id
+      lat
+      lng
+      address
+    }
+    slotCounts {
+      type
+      count
+    }
+  }
+  garagesCount(where:$where){
+    count
+  }
+}
+
+mutation CreateGarage($createGarageInput: CreateGarageInput!) {
+  createGarage(createGarageInput: $createGarageInput) {
+    id
+  }
+}
